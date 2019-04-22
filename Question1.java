@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 class Question1{
     public static void main(String[] args)throws IOException{
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("®”2‚Â‚ğ‹ó”’‚ğ‹²‚ñ‚Å-10000‚©‚ç10000‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
         String input =br.readLine();
         String[] param=input.split(" ");
 
