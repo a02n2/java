@@ -7,9 +7,15 @@ class Question1{
         String input =br.readLine();
         String[] param=input.split(" ");
 
-        int x=Integer.parseInt(param[0]); 
-        int y=Integer.parseInt(param[1]);
+        short x=Short.parseShort(param[0]); 
+        short y=Short.parseShort(param[1]);
 
-        System.out.println(x+y);
+        if(x<=10000 && x>=-10000){
+            if(y<=10000 && y>=-10000){
+                System.out.println(x+y);
+            }
+        }else{
+            System.out.println("-10000‚©‚ç10000‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+        }
     }
 }
