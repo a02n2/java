@@ -15,7 +15,7 @@ class Question2 {
         short y = 0;
 
         try {
-            x = Short.parseShort(param[0]);
+            x = Short.parseShort(param[0]);         //shortŒ^‚É•ÏŠ·
             y = Short.parseShort(param[2]);
         } catch (NumberFormatException n) {
             System.out.println("-10000`10000‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
@@ -25,12 +25,13 @@ class Question2 {
             return;
         }
 
-        if (x > 10000 || x < -10000 || y > 10000 || y < -10000) {
+        if (x > 10000 || x < -10000 || y > 10000 || y < -10000) {       //-10000~10000‚Å‚È‚¯‚ê‚ÎƒGƒ‰[
             System.out.println("-10000`10000‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
             return;
         }
 
-        switch (param[1]) {
+        // “ü—Í‚³‚ê‚½‰‰ŽZ‹L†‚É•ª‚¯‚ÄŒvŽZAo—Í
+        switch (param[1]) {     
         case "+":
             System.out.println(x + y);
             break;
@@ -48,8 +49,8 @@ class Question2 {
                 return;
             }
             break;
-        default:
-            System.out.println("³‚µ‚¢Ž®‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
+        default:        //@•Ï‚È‹L†‚ª“ü—Í‚³‚ê‚½‚çƒGƒ‰[
+            System.out.println("³‚µ‚¢Ž®‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");       
             return;
         }
     }
