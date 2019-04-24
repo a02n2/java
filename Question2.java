@@ -30,7 +30,7 @@ class Question2 {
             return;
         }
 
-        // 入力された演算記号に分けて計算、出力
+        // 入力された演算記号によって計算、出力
         switch (param[1]) {     
         case "+":
             System.out.println(x + y);
@@ -49,7 +49,7 @@ class Question2 {
                 return;
             }
             break;
-        default:        //　変な記号が入力されたらエラー
+        default:        //　別の記号が入力されたらエラー
             System.out.println("正しい式を入力してください");       
             return;
         }
