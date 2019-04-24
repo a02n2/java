@@ -15,7 +15,7 @@ class Question2 {
         short y = 0;
 
         try {
-            x = Short.parseShort(param[0]);         //short型に変換
+            x = Short.parseShort(param[0]); // short型に変換
             y = Short.parseShort(param[2]);
         } catch (NumberFormatException n) {
             System.out.println("-10000～10000で入力してください");
@@ -25,13 +25,13 @@ class Question2 {
             return;
         }
 
-        if (x > 10000 || x < -10000 || y > 10000 || y < -10000) {       //-10000~10000でなければエラー
+        if (x < -10000 || x > 10000 || y < -10000 || y > 10000) { // -10000~10000でなければエラー
             System.out.println("-10000～10000で入力してください");
             return;
         }
 
         // 入力された演算記号によって計算、出力
-        switch (param[1]) {     
+        switch (param[1]) {
         case "+":
             System.out.println(x + y);
             break;
@@ -42,14 +42,13 @@ class Question2 {
             System.out.println(x * y);
             break;
         case "/":
-            try {
-                System.out.println(x / y + "..." + x % y);
-            } catch (ArithmeticException e) {
-                System.out.println("０では割れません");
+            if (y == 0) {
+                System.out.println("0では割れません");
                 return;
             }
+            System.out.println(x / y + "..." + x % y);
             break;
-        default:        //　別の記号が入力されたらエラー
+        default: // 　別の記号が入力されたらエラー
             System.out.println("正しい式を入力してください");       
             return;
         }
