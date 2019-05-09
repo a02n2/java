@@ -26,12 +26,12 @@ public class Question4 {
 
             if (param[i].equals("+") || param[i].equals("-")) { // 入力値が"+"か"-"の場合
                 mark = param[i];
-            } else if (param[i].equals("(")) { //入力値が"("の場合
-                int rightParen = 0;     //")"を格納
-                
-                try{
+            } else if (param[i].equals("(")) { // 入力値が"("の場合
+                int rightParen = 0; // ")"
+
+                try {
                     rightParen = searchRightParen(param, i); // ")"を見つける
-                }catch(Exception e){        // "()"の数がおかしければエラー
+                } catch (Exception e) { // "()"の数がおかしければエラー
                     System.out.println("()を正しく入力してください");
                     System.exit(0);
                 }
@@ -43,7 +43,7 @@ public class Question4 {
             } else { // 入力値が"+"、"-"、"("以外の場合
                 try {
                     x = Integer.parseInt(param[i]);
-                } catch (NumberFormatException e) {     //入力された式がおかしければエラー
+                } catch (NumberFormatException e) { // 入力された式がおかしければエラー
                     System.out.println("※式を正しく入力してください");
                     System.exit(0);
                 }
@@ -86,7 +86,7 @@ public class Question4 {
     }
 
     // ")"をさがす
-    public static int searchRightParen(String[] param, int leftparan) throws Exception{
+    public static int searchRightParen(String[] param, int leftparan) throws Exception {
 
         int i = leftparan;
         int parencount = 0; // "()"の数をカウント
@@ -104,6 +104,6 @@ public class Question4 {
             }
         }
 
-        throw new Exception();    //countが0でなければ例外発生
+        throw new Exception(); // countが0でなければ例外発生
     }
 }
