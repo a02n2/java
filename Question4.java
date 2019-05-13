@@ -17,7 +17,8 @@ public class Question4 {
 
     /**
      * 変数paramに格納されている計算式を変数startからカウンターが変数endに達するまでループ
-     * 変数paramから演算記号、数値を取得 ()が存在すれば再帰呼び出しを行い、先に()内の処理をする
+     * 変数paramから演算記号、数値を取得 
+     * ()が存在すれば再帰呼び出しを行い、先に()内の処理をする
      * 加算減算の処理はcalcを呼び出す
      * 
      * @param param 入力された式
@@ -77,8 +78,8 @@ public class Question4 {
     /**
      * 計算途中の合計値に数値を加算または減算
      * 
-     * @param mark 入力された演算記号
-     * @param sum 計算途中の合計値
+     * @param mark        入力された演算記号
+     * @param sum         計算途中の合計値
      * @param x　入力された数値  
      * @return　現在の合計値に数値を加算または減算した結果
      * @throws Exception -10000から10000を超えた時
@@ -108,7 +109,7 @@ public class Question4 {
     /**
      * 開始括弧に対応する終了括弧を探す
      * 
-     * @param param 入力された式
+     * @param param     入力された式
      * @param openParen 開始括弧
      * @return 終了括弧
      * @throws Exception ()が対になっていない時
