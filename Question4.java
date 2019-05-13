@@ -77,9 +77,10 @@ public class Question4 {
     /**
      * 計算途中の合計値に数値を加算または減算
      * 
-     * @param mark           入力された演算記号
-     * @param sum            計算途中の合計値
-     * @param x　入力された数値 @return　現在の合計値に数値を加算または減算した結果
+     * @param mark 入力された演算記号
+     * @param sum 計算途中の合計値
+     * @param x　入力された数値  
+     * @return　現在の合計値に数値を加算または減算した結果
      * @throws Exception -10000から10000を超えた時
      */
     public static int calc(String mark, int sum, int x) throws Exception {
@@ -107,7 +108,7 @@ public class Question4 {
     /**
      * 開始括弧に対応する終了括弧を探す
      * 
-     * @param param     入力された式
+     * @param param 入力された式
      * @param openParen 開始括弧
      * @return 終了括弧
      * @throws Exception ()が対になっていない時
