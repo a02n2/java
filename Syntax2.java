@@ -11,8 +11,8 @@ public class Syntax2 {
 
         // ArrayIndexOutOfBoundsException ”z—ñ‚Ì”ÍˆÍŠOQÆ
         try {
-            int[] i = { 1 };
-            System.out.println(i[1]);
+            int[] ar = { 1 };
+            System.out.println(ar[1]);
         } catch (Exception e) {
             e.printStackTrace();
         }
