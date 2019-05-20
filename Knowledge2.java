@@ -7,6 +7,11 @@ import java.io.IOException;
 
 public class Knowledge2 {
     public static void main(String[] args) {
+
+        if (args.length > 2) {
+            System.out.println("ファイルは2つまでしか指定できません。");
+        }
+
         try {
             // ファイル読み込み
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(args[0]));
@@ -18,7 +23,7 @@ public class Knowledge2 {
             while ((data = bis.read()) != -1) {
                 bos.write(data);
             }
-            
+
             bis.close();
             bos.close();
         } catch (FileNotFoundException e) {
