@@ -10,6 +10,7 @@ public class Knowledge2 {
 
         if (args.length > 2) {
             System.out.println("ファイルは2つまでしか指定できません。");
+            System.exit(0);
         }
 
         try {
