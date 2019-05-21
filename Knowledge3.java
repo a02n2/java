@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class Knowledge3 {
     public static void main(String[] args) {
 
-        if (args.length > 1) {
-            System.out.println("ファイルは一つしか指定できません。");
+        if (args.length != 1) {
+            System.out.println("ファイルは一つ指定してください。");
             System.exit(0);
         }
 
@@ -35,8 +35,8 @@ public class Knowledge3 {
             }
 
             // 　逆順に出力
-            for (int j = (list.size() - 1); j >= 0; j--) {
-                System.out.println(list.get(j));
+            for (int i = (list.size() - 1); i >= 0; i--) {
+                System.out.println(list.get(i));
             }
 
             // 　"あいうえお"が格納されている行番号を出力
@@ -48,8 +48,6 @@ public class Knowledge3 {
 
         } catch (FileNotFoundException e) {
             System.out.println("ファイルが見つかりません。");
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("ファイルを一つ指定してください。");
         } catch (IOException e) {
             System.out.println(e);
         }
