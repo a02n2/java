@@ -24,16 +24,11 @@ public class Knowledge4 {
             // ファイルの中身を一行ずつ読み込み、空白で分割、マップへ格納
             String str;
             while ((str = br.readLine()) != null) {
-                String[] keyValue = str.split(" ");
+                String[] keyValue = str.split(" ", 2);
 
-                if (keyValue.length == 2) {
-                    map.put(keyValue[0], keyValue[1]);
-                } else {
-                    System.out.println("ファイル内のキーと値が正しく入力されていません");
-                    System.exit(0);
-                }
+                map.put(keyValue[0], keyValue[1]);
             }
-
+            
             br.close();
 
             // マップに格納されているすべてのキーと値を出力
