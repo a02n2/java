@@ -26,7 +26,7 @@ public class Ac126a {
     }
 
     /**
-     * String型で入力された文字列の長さと小文字にする位置をint型に変換
+     * 汎用性を重視する為にStringからint型に変換 （変換失敗時はexit）
      * 
      * @param strLenLow　文字列の長さ、小文字にする位置
      * @param text　"文字列の長さ"、"小文字にする位置"の文章
@@ -55,23 +55,29 @@ public class Ac126a {
      */
     public static void check(int length, int lowerCase, String abcStr) {
 
+        boolean err_flg = false;
+
         if (length < 1 || length > 50) {
             System.out.println("文字列の長さが範囲外です");
-            System.exit(0);
+            err_flg = true;
         }
 
         if (lowerCase < 1 || lowerCase > length) {
             System.out.println("小文字に変換する位置が範囲外です");
-            System.exit(0);
+            err_flg = true;
         }
 
         if (length != abcStr.length()) {
             System.out.println("指定した文字列の長さと、ABCからできた文字列の長さが違います");
-            System.exit(0);
+            err_flg = true;
         }
 
         if (!abcStr.matches("[A-C]+")) {
             System.out.println("文字列はABCだけで作ってください");
+            err_flg = true;
+        }
+
+        if(err_flg == true){
             System.exit(0);
         }
     }
