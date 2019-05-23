@@ -29,7 +29,7 @@ public class Ac126a {
      * 汎用性を重視する為にStringからint型に変換 （変換失敗時はexit）
      * 
      * @param strLenLow　文字列の長さ、小文字にする位置
-     * @param text　"文字列の長さ"、"小文字にする位置"の文章
+     * @param text　変換対象のタイトル
      * @return　変換した値
      */
     public static int convert(String strLenLow, String text) {
@@ -44,11 +44,8 @@ public class Ac126a {
     }
 
     /**
-     * 制約のチェックを行う 
-     * ・1<=文字列の長さ<=50 
-     * ・1<=小文字にする位置<=文字列の長さ
-     * ・文字列はABCからなる
-     * エラーがあるとflagがtrueになり最後に強制終了
+     * 制約のチェックを行う  ・1<=文字列の長さ<=50  ・1<=小文字にする位置<=文字列の長さ
+     * ・文字列はABCからなる エラーがあるとflagがtrueになり最後に強制終了
      * 
      * @param length    文字列の長さ
      * @param lowerCase 小文字にする位置
@@ -78,7 +75,7 @@ public class Ac126a {
             err_flg = true;
         }
 
-        if(err_flg == true){
+        if (err_flg) {
             System.exit(0);
         }
     }
