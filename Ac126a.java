@@ -37,8 +37,8 @@ public class Ac126a {
             }
 
             // 文字列の指定の位置を小文字に変換し、出力
-            String newS = s.substring(0, k - 1) + s.substring(k - 1, k).toLowerCase() + s.substring(k);
-            System.out.println(newS);
+            s = s.substring(0, k - 1) + s.substring(k - 1, k).toLowerCase() + s.substring(k);
+            System.out.println(s);
 
         } catch (NumberFormatException e) {
             System.out.println("正しく入力してください");
