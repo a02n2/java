@@ -14,20 +14,12 @@ public class Ac126b {
         }
 
         // 前2文字と後ろに文字を分けて、String型からint型へ変換
-        int front = 0;
-        int back = 0;
-        try {
-            front = Integer.parseInt(str.substring(0, 2));
-            back = Integer.parseInt(str.substring(2, 4));
-        } catch (NumberFormatException e) {
-            System.out.println("数値が正しく入力されていません");
-            System.exit(0);
-        }
-
-        boolean my = (front >= 1 && front <= 12);
-        boolean ym = (back >= 1 && back <= 12);
+        int front = convert(str.substring(0, 2));
+        int back = convert(str.substring(2, 4));
 
         // myがtrue→MMYY、ymがtrue→YYMM、両方true→AMBIGUOS,両方false→NA、を表示
+        boolean my = (front >= 1 && front <= 12);
+        boolean ym = (back >= 1 && back <= 12);
         if (my) {
             if (ym) {
                 System.out.println("AMBIGUOS");
@@ -39,5 +31,23 @@ public class Ac126b {
         } else {
             System.out.println("NA");
         }
+    }
+
+    /**
+     * 汎用性を重視する為にStringからint型に変換 （変換失敗時はexit）
+     * 
+     * @param str 入力された数字列
+     * @return 変換した数値
+     */
+    public static int convert(String str) {
+
+        int num = 0;
+        try {
+            num = Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            System.out.println("数値が正しく入力されていません");
+            System.exit(0);
+        }
+        return num;
     }
 }
