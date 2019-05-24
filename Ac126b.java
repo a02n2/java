@@ -13,16 +13,12 @@ public class Ac126b {
             System.exit(0);
         }
 
-        // ‘O2•¶š‚ÆŒã‚ë2•¶š‚Å•ª‚¯‚é
-        String front_str = str.substring(0, 2);
-        String back_str = str.substring(2, 4);
-
-        // StringŒ^‚©‚çintŒ^‚Ö•ÏŠ·
+        // ‘O2•¶š‚ÆŒã‚ë‚É•¶š‚ğ•ª‚¯‚ÄAStringŒ^‚©‚çintŒ^‚Ö•ÏŠ·
         int front = 0;
         int back = 0;
         try {
-            front = Integer.parseInt(front_str);
-            back = Integer.parseInt(back_str);
+            front = Integer.parseInt(str.substring(0, 2));
+            back = Integer.parseInt(str.substring(2, 4));
         } catch (NumberFormatException e) {
             System.out.println("”’l‚ª³‚µ‚­“ü—Í‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
             System.exit(0);
