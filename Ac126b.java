@@ -13,7 +13,7 @@ public class Ac126b {
             System.exit(0);
         }
 
-        // ‘O2•¶š‚ÆŒã‚ë‚É•¶š‚ğ•ª‚¯‚ÄAStringŒ^‚©‚çintŒ^‚Ö•ÏŠ·
+        // ‘O2•¶š‚ÆŒã‚ë2•¶š‚ğ•ª‚¯‚ÄAStringŒ^‚©‚çintŒ^‚Ö•ÏŠ·
         int front = convert(str.substring(0, 2));
         int back = convert(str.substring(2, 4));
 
