@@ -18,14 +18,12 @@ public class Ac126b {
         int back = convert(str.substring(2, 4));
 
         // myがtrue→MMYY、ymがtrue→YYMM、両方true→AMBIGUOS,両方false→NA、を表示
-        boolean my = (front >= 1 && front <= 12);
-        boolean ym = (back >= 1 && back <= 12);
-        if (my) {
-            if (ym) {
-                System.out.println("AMBIGUOS");
-            } else {
-                System.out.println("MMYY");
-            }
+        boolean my = isMonth(front);
+        boolean ym = isMonth(back);
+        if (my && ym) {
+            System.out.println("AMBIGUOS");
+        } else if (my) {
+            System.out.println("MMYY");
         } else if (ym) {
             System.out.println("YYMM");
         } else {
@@ -49,5 +47,20 @@ public class Ac126b {
             System.exit(0);
         }
         return num;
+    }
+
+    /**
+     * 数値が1～12(month)か調べる
+     *　1～12ならtrueを返し、そうでなければfalseを返す
+     * 
+     * @param num 前2文字か後2文字
+     * @return　true,false
+     */
+    public static boolean isMonth(int num){
+        if (num >= 1 && num <= 12){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
