@@ -45,7 +45,7 @@ public class Ac126b {
         try {
             num = Integer.parseInt(str);
         } catch (NumberFormatException e) {
-            System.out.println("”’l‚ª³‚µ‚­“ü—Í‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            System.out.println("³‚µ‚­”š—ñ‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
             System.exit(0);
         }
         return num;
