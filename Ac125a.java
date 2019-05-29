@@ -16,19 +16,17 @@ public class Ac125a {
         }
 
         // 3分割したものをString型からint型に変換し代入
-        int seconds = toInt(timePieces[0]);
-        int pieces = toInt(timePieces[1]);
-        int time = toInt(timePieces[2]);
+        int seconds = stringToInt(timePieces[0]);
+        int pieces = stringToInt(timePieces[1]);
+        int time = stringToInt(timePieces[2]);
 
         // 制約チェック
-        check(seconds, "A");
-        check(pieces, "b");
-        check(time, "T");
+        rangeCheck(seconds, "A");
+        rangeCheck(pieces, "B");
+        rangeCheck(time, "T");
 
-        //　何回作られるのか計算し、作られるビスケットの枚数を計算
-        int rounds = time / seconds;
-        int sumPieces = pieces * rounds;
-
+        // 何回作られるのか計算し、作られるビスケットの枚数を計算
+        int sumPieces = pieces * (time / seconds);
         System.out.println(sumPieces);
     }
 
@@ -38,7 +36,7 @@ public class Ac125a {
      * @param timePieces ビスケットが作られる時間,A秒間に作られるビスケットの枚数,起動時間
      * @return 変換した値
      */
-    public static int toInt(String timePieces) {
+    public static int stringToInt(String timePieces) {
         int timePieces_int = 0;
         try {
             timePieces_int = Integer.parseInt(timePieces);
@@ -56,7 +54,7 @@ public class Ac125a {
      * @param num ビスケットが作られる時間,A秒間に作られるビスケットの枚数,起動時間
      * @param text チェック対象のタイトル
      */
-    public static void check(int num, String text) {
+    public static void rangeCheck(int num, String text) {
         if (num < 1 || num > 20) {
             System.out.println(text + "が範囲外です");
             System.exit(0);
