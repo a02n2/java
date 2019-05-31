@@ -25,7 +25,7 @@ public class JavaDB1 {
             insert();
 
             // 登録されているすべての行を表示
-            select();
+            selectAll();
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -88,16 +88,17 @@ public class JavaDB1 {
      * 
      * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
      */
-    public static void select() throws SQLException {
+    public static void selectAll() throws SQLException {
         PreparedStatement ps = conn.prepareStatement("select * from tasks");
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            System.out.println(rs.getInt("id"));
-            System.out.println("/");
-            System.out.println(rs.getString("title"));
-            System.out.println("/");
-            System.out.println(rs.getString("comment"));
+            System.out.print(rs.getInt("id"));
+            System.out.print("/");
+            System.out.print(rs.getString("title"));
+            System.out.print("/");
+            System.out.print(rs.getString("comment"));
+            System.out.print("\n");
         }
     }
 
