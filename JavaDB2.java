@@ -106,22 +106,23 @@ public class JavaDB2 {
             try {
                 // 汎用性を重視する為にStringからint型に変換
                 deleteID = Integer.parseInt(str);
-
-                // 入力されたIDが存在するかチェック
-                ps.setInt(1, deleteID);
-                ResultSet rs = ps.executeQuery();
-
-                boolean isExists = rs.next();
-                if (!isExists) {
-                    System.out.println("※該当するIDは登録されていません");
-                    continue;
-                }
-
-                break;
             } catch (NumberFormatException e) {
                 System.out.println("※削除するレコードのIDを正しく入力してください");
                 continue;
             }
+
+            // 入力されたIDが存在するかチェック
+            ps.setInt(1, deleteID);
+            ResultSet rs = ps.executeQuery();
+
+            boolean isExists = rs.next();
+            if (!isExists) {
+                System.out.println("※該当するIDは登録されていません");
+                continue;
+            }
+
+            break;
+            
         }
         return deleteID;
     }
