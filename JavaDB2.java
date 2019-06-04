@@ -43,7 +43,7 @@ public class JavaDB2 {
                 }
                 // 指定されたレコードを削除
                 deleteRecord(deleteID);
-                
+
                 // 再入力するかどうか
                 System.out.println("入力を終了しますか？(0で終了)");
                 String str = br.readLine();
@@ -94,13 +94,10 @@ public class JavaDB2 {
      * 
      * @param id 削除するレコードのIDの数字列
      * @return 削除するレコードのID
-     * @throws SQLException          データベース・アクセス・エラーまたはその他のエラー
      * @throws NumberFormatException 数字以外が入力されたときのエラー
      */
-    public static int getDeleteID(String id) throws SQLException, NumberFormatException {
-        int deleteID = Integer.parseInt(id);
-
-        return deleteID;
+    public static int getDeleteID(String id) throws NumberFormatException {
+        return Integer.parseInt(id);
     }
 
     /**
@@ -116,8 +113,7 @@ public class JavaDB2 {
         ps.setInt(1, deleteID);
         ResultSet rs = ps.executeQuery();
 
-        boolean isExists = rs.next();
-        if (!isExists) {
+        if (!rs.next()) {
             System.out.println("※該当するIDは登録されていません");
             return false;
         }
