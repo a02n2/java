@@ -30,7 +30,6 @@ public class JavaDB2 {
                 String id = br.readLine();
 
                 int deleteID = 0;
-
                 // String型からint型に変換
                 try {
                     deleteID = getDeleteID(id);
@@ -38,15 +37,13 @@ public class JavaDB2 {
                     System.out.println("※削除するレコードのIDを正しく入力してください");
                     continue;
                 }
-
                 // レコードの存在チェック
                 if (!getRecordExists(deleteID)) {
                     continue;
                 }
-
                 // 指定されたレコードを削除
                 deleteRecord(deleteID);
-
+                
                 // 再入力するかどうか
                 System.out.println("入力を終了しますか？(0で終了)");
                 String str = br.readLine();
