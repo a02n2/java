@@ -23,8 +23,38 @@ public class JavaDB2 {
 
             // すべての行を表示
             selectAll();
-            // 指定されたレコードを削除
-            deleteRecord();
+
+            while (true) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                System.out.println("削除するレコードのIDを入力してください");
+                String id = br.readLine();
+
+                int deleteID = 0;
+
+                // String型からint型に変換
+                try {
+                    deleteID = getDeleteID(id);
+                } catch (NumberFormatException e) {
+                    System.out.println("※削除するレコードのIDを正しく入力してください");
+                    continue;
+                }
+
+                // レコードの存在チェック
+                if (!getRecordExists(deleteID)) {
+                    continue;
+                }
+
+                // 指定されたレコードを削除
+                deleteRecord(deleteID);
+
+                // 再入力するかどうか
+                System.out.println("入力を終了しますか？(0で終了)");
+                String str = br.readLine();
+                if (continueFlg(str)) {
+                    continue;
+                }
+                break;
+            }
             // 削除後のすべての行を表示
             selectAll();
 
@@ -58,91 +88,70 @@ public class JavaDB2 {
             System.out.print(rs.getString("title"));
             System.out.print("/");
             System.out.print(rs.getString("comment"));
-            System.out.println("\n");
+            System.out.print("\n");
         }
+    }
+
+    /**
+     * 汎用性を重視する為にStringからint型に変換
+     * 
+     * @param id 削除するレコードのIDの数字列
+     * @return 削除するレコードのID
+     * @throws SQLException          データベース・アクセス・エラーまたはその他のエラー
+     * @throws NumberFormatException 数字以外が入力されたときのエラー
+     */
+    public static int getDeleteID(String id) throws SQLException, NumberFormatException {
+        int deleteID = Integer.parseInt(id);
+
+        return deleteID;
+    }
+
+    /**
+     * レコードが存在するかチェック 
+     * 存在しない(false),存在する(true)
+     * 
+     * @param deleteID 削除するレコードのID
+     * @return true,false
+     * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
+     */
+    public static boolean getRecordExists(int deleteID) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("select * from tasks where id = ?;");
+        ps.setInt(1, deleteID);
+        ResultSet rs = ps.executeQuery();
+
+        boolean isExists = rs.next();
+        if (!isExists) {
+            System.out.println("※該当するIDは登録されていません");
+            return false;
+        }
+        return true;
     }
 
     /**
      * 指定されたIDのレコードを削除
      * 
-     * @throws IOException 入出力エラー
+     * @param deleteID 削除するレコードのID
      * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
      */
-    public static void deleteRecord() throws IOException, SQLException {
+    public static void deleteRecord(int deleteID) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("DELETE FROM tasks where id = ?;");
-
-        while (true) {
-
-            // 削除するレコードのIDを取得
-            int deleteID = getDeleteID();
-
-            // 入力されたIDのレコードを削除
-            ps.setInt(1, deleteID);
-            ps.executeUpdate();
-
-            // 削除を終了するかしないか
-            if (deleteEnd()) {
-                break;
-            }
-        }
+        ps.setInt(1, deleteID);
+        ps.executeUpdate();
     }
 
     /**
-     * 削除するレコードのIDを取得
+     * 削除を終了するのか  
+     * 0で終了(false)、0以外続行(true)
      * 
-     * @return 削除するレコードのID
-     * @throws IOException 入出力エラー
-     * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
-     */
-    public static int getDeleteID() throws IOException, SQLException {
-        int deleteID = 0;
-        PreparedStatement ps = conn.prepareStatement("select * from tasks where id = ?;");
-
-        while (true) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("削除するレコードのIDを入力してください");
-            String str = br.readLine();
-
-            try {
-                // 汎用性を重視する為にStringからint型に変換
-                deleteID = Integer.parseInt(str);
-            } catch (NumberFormatException e) {
-                System.out.println("※削除するレコードのIDを正しく入力してください");
-                continue;
-            }
-
-            // 入力されたIDが存在するかチェック
-            ps.setInt(1, deleteID);
-            ResultSet rs = ps.executeQuery();
-
-            boolean isExists = rs.next();
-            if (!isExists) {
-                System.out.println("※該当するIDは登録されていません");
-                continue;
-            }
-            break; 
-        }
-        return deleteID;
-    }
-
-    /**
-     * 削除を終了するのか
-     * 0で終了(true)、0以外続行(false)
-     * 
+     * @param str 0かそれ以外の文字
      * @return true,false
-     * @throws IOException 入出力エラー
      */
-    public static boolean deleteEnd() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("入力を終了しますか？(0で終了)");
-        String str = br.readLine();
-
+    public static boolean continueFlg(String str) {
         if (str.equals("0")) {
             System.out.println("終了します");
-            return true;
-        } else {
-            System.out.println("続行します");
             return false;
         }
+        System.out.println("続行します");
+        return true;
     }
 }
