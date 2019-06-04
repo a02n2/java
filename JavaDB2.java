@@ -120,9 +120,7 @@ public class JavaDB2 {
                 System.out.println("¦ŠY“–‚·‚éID‚Í“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
                 continue;
             }
-
-            break;
-            
+            break; 
         }
         return deleteID;
     }
