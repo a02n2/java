@@ -152,7 +152,7 @@ public class JavaDB3 {
     /**
      * タイトルとコメントの長さをチェック   
      * 0 < タイトル < 32   
-     * 0 < コメント　< 256
+     * 0 < コメント < 256
      * 
      * @param titleComment　タイトル、コメント
      * @param length　チェック対象の最大の長さ
