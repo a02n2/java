@@ -12,65 +12,63 @@ public class JavaDB3 {
 
     public static void main(String[] args) throws IOException {
         String hostname = "localhost";
+        String portnumber = "5432";
         String dbname = "test";
         String username = "postgres";
         String password = "user01";
 
         try {
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://" + hostname + ":5432/" + dbname, username, password);
+            conn = DriverManager.getConnection("jdbc:postgresql://" + hostname + ":" + portnumber + "/" + dbname,
+                    username, password);
 
             // テーブルに登録されているすべての行を表示
             selectAll();
 
             while (true) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                System.out.println("更新するIDを入力してください");
-                String id = br.readLine();
-
-                // String型からint型に変換
-                int updateID = 0;
                 try {
-                    updateID = getUpdateID(id);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                    System.out.println("更新するIDを入力してください");
+                    String id_str = br.readLine();
+
+                    // String型からint型に変換
+                    int updateID = Integer.parseInt(id_str);
+
+                    // レコードの存在チェック
+                    getRecordExists(updateID);
+
+                    // コメントとタイトルを読み込み、分割
+                    System.out.println("更新したいタイトルとコメントをコンマで区切って入力してください");
+                    String[] titleComment = splitComma(br.readLine());
+
+                    // タイトルとコメントの長さチェック
+                    rangeCheck(titleComment[0], titleComment[1]);
+
+                    // レコードを更新
+                    updateRecord(updateID, titleComment[0], titleComment[1]);
+                    System.out.println("レコードを更新しました");
+
+                    // 更新を終了するか
+                    System.out.println("更新を終了しますか(0で終了)");
+                    String str = br.readLine();
+                    if (continueFlg(str)) {
+                        break;
+                    }
+                } catch (SQLException e) {
+                    throw e;
                 } catch (NumberFormatException e) {
                     System.out.println("※IDを正しく入力してください");
                     continue;
-                }
-                // レコードの存在チェック
-                if (!getRecordExists(updateID)) {
-                    continue;
-                }
-
-                System.out.println("更新したいタイトルとコメントをコンマで区切って入力してください");
-                String titleComment[] = {};
-                try {
-                    // コメントとタイトルを読み込み、分割
-                    titleComment = splitTC(br.readLine());
                 } catch (Exception e) {
-                    System.out.println("タイトルとコメントを正しく入力してください");
+                    System.out.println(e.getMessage());
                     continue;
                 }
-                // タイトルとコメントの長さチェック
-                if (!rangeCheck(titleComment[0], 32, "タイトル") || !rangeCheck(titleComment[1], 256, "コメント")){   
-                    continue;
-                }
-                // レコードを更新
-                updateRecord(updateID, titleComment[0], titleComment[1]);
-
-                // 更新を終了するか
-                System.out.println("更新を終了しますか(0で終了)");
-                String str = br.readLine();
-                if (continueFlg(str)) {
-                    continue;
-                }
-                break;
             }
             // テーブルに登録されているすべての行を表示
             selectAll();
-
         } catch (SQLException e) {
             System.out.println(e);
-        } catch (Exception e) {
+        } catch(Exception e){
             System.out.println(e);
         } finally {
             try {
@@ -103,47 +101,35 @@ public class JavaDB3 {
     }
 
     /**
-     * 汎用性を重視する為にStringからint型に変換
-     * 
-     * @param id 更新するレコードのIDの数字列
-     * @return 更新するレコードのID
-     * @throws NumberFormatException 数字以外が入力されたときのエラー
-     */
-    public static int getUpdateID(String id) throws NumberFormatException {
-        return Integer.parseInt(id);
-    }
-
-    /**
-     * レコードが存在するかチェック   
-     * 存在しない(false),存在する(true)
+     * レコードが存在するかチェック    
+     * 存在しないときは例外発生
      * 
      * @param updateID 更新するレコードのID
      * @return true,false
      * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
+     * @throws Exception    指定されたレコードが存在しない時
      */
-    public static boolean getRecordExists(int updateID) throws SQLException {
+    public static void getRecordExists(int updateID) throws SQLException, Exception {
         PreparedStatement ps = conn.prepareStatement("select * from tasks where id = ?");
         ps.setInt(1, updateID);
         ResultSet rs = ps.executeQuery();
 
         if (!rs.next()) {
-            System.out.println("※該当するIDは登録されていません");
-            return false;
+            throw new Exception("※該当するIDが存在しません");
         }
-        return true;
     }
 
     /**
-     * 読み取った文字列をコンマでタイトルとコメントに分割
+     * 読み取った文字列をコンマでタイトルとコメントに分割 
      * 文字列にコンマがないときは例外発生
      * 
      * @param tc 読み取った文字列
      * @return タイトル、コメント
      * @throws Exception 文字列にコンマがない時
      */
-    public static String[] splitTC(String tc) throws Exception {
-        if(!tc.contains(",")){
-            throw new Exception();
+    public static String[] splitComma(String tc) throws Exception {
+        if (!tc.contains(",")) {
+            throw new Exception("※タイトルとコメントを正しく入力してください");
         }
         String[] titleComment = tc.split(",", 2);
         return titleComment;
@@ -151,19 +137,19 @@ public class JavaDB3 {
 
     /**
      * タイトルとコメントの長さをチェック   
-     * 0 < タイトル < 32   
-     * 0 < コメント < 256
+     * 0 < タイトル < 32    
+     * 0 < コメント < 256 (null　OK)
      * 
-     * @param titleComment　タイトル、コメント
-     * @param length　チェック対象の最大の長さ
-     * @param text　チェック対象のタイトル
+     * @param title　タイトル
+     * @param comment　コメント
      */
-    public static boolean rangeCheck(String titleComment, int length, String txt) {
-        if (titleComment.length() < 1 || titleComment.length() > length) {
-            System.out.println("※" + txt + "が範囲外です");
-            return false;
+    public static void rangeCheck(String title, String comment) throws Exception {
+        if (title.length() < 1 || title.length() > 32) {
+            throw new Exception("※タイトルが範囲外です");
         }
-        return true;
+        if (comment.length() > 256) {
+            throw new Exception("※コメントが長すぎます");
+        }
     }
 
     /**
@@ -175,7 +161,7 @@ public class JavaDB3 {
      * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
      */
     public static void updateRecord(int updateID, String title, String comment) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("update tasks set title = ?,comment = ? where id = ?;");
+        PreparedStatement ps = conn.prepareStatement("update tasks set (title, comment) = (?, ?) where id = ?;");
         ps.setString(1, title);
         ps.setString(2, comment);
         ps.setInt(3, updateID);
@@ -183,8 +169,8 @@ public class JavaDB3 {
     }
 
     /**
-     * 削除を終了するのか    
-     * 0で終了(false)、0以外続行(true)
+     * 削除を終了するのか     
+     * 0で終了(true)、0以外続行(false)
      * 
      * @param str 0かそれ以外の文字
      * @return true,false
@@ -192,9 +178,9 @@ public class JavaDB3 {
     public static boolean continueFlg(String str) {
         if (str.equals("0")) {
             System.out.println("終了します");
-            return false;
+            return true;
         }
         System.out.println("続行します");
-        return true;
+        return false;
     }
 }
