@@ -32,10 +32,10 @@ public class JavaDB3 {
                     String id_str = br.readLine();
 
                     // String型からint型に変換
-                    int updateID = Integer.parseInt(id_str);
+                    int id = Integer.parseInt(id_str);
 
                     // レコードの存在チェック
-                    getRecordExists(updateID);
+                    recordExists(id);
 
                     // コメントとタイトルを読み込み、分割
                     System.out.println("更新したいタイトルとコメントをコンマで区切って入力してください");
@@ -45,7 +45,7 @@ public class JavaDB3 {
                     rangeCheck(titleComment[0], titleComment[1]);
 
                     // レコードを更新
-                    updateRecord(updateID, titleComment[0], titleComment[1]);
+                    updateRecord(id, titleComment[0], titleComment[1]);
                     System.out.println("レコードを更新しました");
 
                     // 更新を終了するか
@@ -103,13 +103,13 @@ public class JavaDB3 {
     /**
      * レコードが存在するかチェック 
      * 
-     * @param updateID 更新するレコードのID
+     * @param id 更新するレコードのID
      * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
      * @throws Exception    指定されたレコードが存在しない時
      */
-    public static void getRecordExists(int updateID) throws SQLException, Exception {
+    public static void recordExists(int id) throws SQLException, Exception {
         PreparedStatement ps = conn.prepareStatement("select * from tasks where id = ?");
-        ps.setInt(1, updateID);
+        ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
 
         if (!rs.next()) {
@@ -120,16 +120,16 @@ public class JavaDB3 {
     /**
      * 読み取った文字列をコンマでタイトルとコメントに分割 
      * 
-     * @param tc 読み取った文字列
+     * @param str 読み取った文字列
      * @return タイトル、コメント
      * @throws Exception 文字列にコンマがない時
      */
-    public static String[] splitComma(String tc) throws Exception {
-        if (!tc.contains(",")) {
+    public static String[] splitComma(String str) throws Exception {
+        if (!str.contains(",")) {
             throw new Exception("※タイトルとコメントを正しく入力してください");
         }
-        String[] titleComment = tc.split(",", 2);
-        return titleComment;
+        String[] strings = str.split(",", 2);
+        return strings;
     }
 
     /**
@@ -142,27 +142,35 @@ public class JavaDB3 {
      * @throws Exception タイトルかコメントの長さが範囲外の時
      */
     public static void rangeCheck(String title, String comment) throws Exception {
+        boolean checkFlg = false;
+        String titleErr = "";
+        String commentErr = "";
         if (title.length() < 1 || title.length() > 32) {
-            throw new Exception("※タイトルが範囲外です");
+            checkFlg = true;
+            titleErr = "※タイトルが範囲外です";
         }
         if (comment.length() > 256) {
-            throw new Exception("※コメントが長すぎます");
+            checkFlg = true;
+            commentErr = "※コメントが長すぎます";
+        }
+        if(checkFlg){
+            throw new Exception(titleErr + commentErr);
         }
     }
 
     /**
      * 指定されたIDのレコードを更新
      * 
-     * @param updateID 更新するレコードのID
+     * @param id 更新するレコードのID
      * @param title    更新したいタイトル
      * @param comment  更新したいコメント
      * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
      */
-    public static void updateRecord(int updateID, String title, String comment) throws SQLException {
+    public static void updateRecord(int id, String title, String comment) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("update tasks set (title, comment) = (?, ?) where id = ?;");
         ps.setString(1, title);
         ps.setString(2, comment);
-        ps.setInt(3, updateID);
+        ps.setInt(3, id);
         ps.executeUpdate();
     }
 
