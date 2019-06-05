@@ -137,7 +137,7 @@ public class JavaDB3 {
     /**
      * タイトルとコメントの長さをチェック   
      * 0 < タイトル < 32    
-     * 0 < コメント < 256 (null　OK)
+     * コメント < 256 
      * 
      * @param title　タイトル
      * @param comment　コメント
