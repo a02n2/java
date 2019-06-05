@@ -105,7 +105,6 @@ public class JavaDB3 {
      * 存在しないときは例外発生
      * 
      * @param updateID 更新するレコードのID
-     * @return true,false
      * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
      * @throws Exception    指定されたレコードが存在しない時
      */
