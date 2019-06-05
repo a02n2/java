@@ -68,7 +68,7 @@ public class JavaDB3 {
             selectAll();
         } catch (SQLException e) {
             System.out.println(e);
-        } catch(Exception e){
+        } catch(Exception e) {
             System.out.println(e);
         } finally {
             try {
