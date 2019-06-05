@@ -101,8 +101,7 @@ public class JavaDB3 {
     }
 
     /**
-     * レコードが存在するかチェック    
-     * 存在しないときは例外発生
+     * レコードが存在するかチェック 
      * 
      * @param updateID 更新するレコードのID
      * @throws SQLException データベース・アクセス・エラーまたはその他のエラー
@@ -120,7 +119,6 @@ public class JavaDB3 {
 
     /**
      * 読み取った文字列をコンマでタイトルとコメントに分割 
-     * 文字列にコンマがないときは例外発生
      * 
      * @param tc 読み取った文字列
      * @return タイトル、コメント
@@ -141,6 +139,7 @@ public class JavaDB3 {
      * 
      * @param title　タイトル
      * @param comment　コメント
+     * @throws Exception タイトルかコメントの長さが範囲外の時
      */
     public static void rangeCheck(String title, String comment) throws Exception {
         if (title.length() < 1 || title.length() > 32) {
